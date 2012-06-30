@@ -9,6 +9,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'redis', '~> 3.0.1'
 
 group :test do
   gem 'rspec-rails', '~> 2.0'
