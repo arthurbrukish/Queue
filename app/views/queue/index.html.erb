@@ -1,12 +1,44 @@
+<% if @task_message %>
+    <div id="task">
+      Processed task: <b><%= task_message_details( @task_message ) %></b>
+    </div>
+<%- end -%>
+
+<h2>Queue</h2>
 <table>
     <tr>
         <th>Finish Time</th>
         <th>Description</th>
     </tr>
     <% @tasks.each do |t| %>
-        <tr>
+        <tr <%=raw 'class="expired"' if t.finish_time < Time.now %>>
             <td><%= t.finish_time %></td>
             <td><%= t.description %></td>
         </tr>
     <% end %>
 </table>
+
+<h2>Push Task</h2>
+<%= form_for :task, :url => queue_index_path do |f| %>
+    <%= f.label :finish_time %>
+    <%= f.text_field :finish_time %>
+
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+
+    <%= f.submit 'Push' %>
+<% end %>
+
+<h2>Get Task</h2>
+<%= form_for :task, :url => get_task_queue_index_path do |f| %>
+    <%= f.label :finish_time %>
+    <%= f.text_field :finish_time %>
+
+    <%= f.submit 'Get' %>
+<% end %>
+
+<h2>Pop Task</h2>
+<%= form_for :task, :url => pop_queue_index_path do |f| %>
+    <%= f.submit 'Pop' %>
+<% end %>
+

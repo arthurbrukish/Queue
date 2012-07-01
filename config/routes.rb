@@ -1,7 +1,12 @@
 TestTask::Application.routes.draw do
 
-  root :to => 'queue#index'
+  resources :queue, :only => [ :index, :create ] do
+    collection do
+      post 'pop'
+      post 'get_task'
+    end
+  end
 
-  match ':controller(/:action(/:id))(.:format)'
+  root :to => 'queue#index'
 
 end
