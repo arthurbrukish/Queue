@@ -40,4 +40,11 @@ class TaskMessage
 
   end
 
+  # @override Comparator
+  def ==( rhs )
+
+    rhs.is_a?(TaskMessage) and self.finish_time = rhs.finish_time and self.description = rhs.description
+
+  end
+
 end

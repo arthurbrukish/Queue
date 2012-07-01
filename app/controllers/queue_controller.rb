@@ -32,7 +32,9 @@ class QueueController < ApplicationController
 
   def get_task
 
-    @task_message = @queue.get_task( params[:task][:finish_time] )
+    time = Time.parse( params[:task][:finish_time] )
+
+    @task_message = @queue.get_task( time )
 
     @tasks = @queue.tasks
 
@@ -44,7 +46,7 @@ class QueueController < ApplicationController
 
     def set_queue
 
-      @queue = TaskQueue.instance
+      @queue = TaskQueue.new
 
     end
 

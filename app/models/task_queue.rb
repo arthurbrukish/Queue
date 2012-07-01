@@ -3,7 +3,7 @@
 class TaskQueue
 
   # Singleton pattern
-  include Singleton
+  # include Singleton
 
   # Adding new task
   def push( task )
@@ -66,6 +66,11 @@ class TaskQueue
 
     tasks.select {|t| t.finish_time < Time.now }
 
+  end
+
+  # Clearing all tasks in queue
+  def clear
+    RedisConnection.del( key )
   end
 
   private
