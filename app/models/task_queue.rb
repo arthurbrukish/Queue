@@ -8,7 +8,7 @@ class TaskQueue
   # Adding new task
   def push( task )
 
-    @redis.sadd( key, task.to_redis )
+    RedisConnection.sadd( key, task.to_redis )
 
   end
 
@@ -23,7 +23,7 @@ class TaskQueue
     task = expired_tasks.first
 
     # Remove found one from Redis
-    @redis.srem( key, task.to_redis )
+    RedisConnection.srem( key, task.to_redis )
 
     task
 
@@ -43,7 +43,7 @@ class TaskQueue
   def tasks
 
     # Converting list of serialized tasks to array of TaskMessage
-    task_messages = @redis.smembers( key ).map {|t| TaskMessage.from_redis( t ) }
+    task_messages = RedisConnection.smembers( key ).map {|t| TaskMessage.from_redis( t ) }
 
     # Sort them descending via finish_time
     task_messages.sort {|x, y| y.finish_time <=> x.finish_time }
@@ -58,14 +58,6 @@ class TaskQueue
   end
 
   private
-
-    # Private constructor
-    def initialize
-
-      # Initializing connection to Redis
-      @redis = Redis.new( :host => AppConfig['redist']['host'], :port => AppConfig['redist']['port'] )
-
-    end
 
     # Redis key
     def key
