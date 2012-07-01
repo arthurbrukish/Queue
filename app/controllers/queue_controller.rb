@@ -18,6 +18,10 @@ class QueueController < ApplicationController
 
     render :index
 
+  rescue
+
+    redirect_to root_path
+
   end
 
   def pop
@@ -39,6 +43,10 @@ class QueueController < ApplicationController
     @tasks = @queue.tasks
 
     render :index
+
+  rescue
+
+    redirect_to root_path
 
   end
 
