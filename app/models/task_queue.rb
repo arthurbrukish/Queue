@@ -35,7 +35,18 @@ class TaskQueue
 
     return pop if expired_tasks.present?
 
-    tasks.find {|t| t.finish_time == finish_time }
+    # If not time - expecting for a string Time version
+    finish_time = Time.parse( finish_time.to_s ) unless finish_time.is_a?(Time)
+
+    task = tasks.find {|t| t.finish_time == finish_time }
+
+    # Return nil if nothing found
+    return if task.nil?
+
+    # Remove found one from Redis
+    RedisConnection.srem( key, task.to_redis )
+
+    task
 
   end
 
@@ -45,8 +56,8 @@ class TaskQueue
     # Converting list of serialized tasks to array of TaskMessage
     task_messages = RedisConnection.smembers( key ).map {|t| TaskMessage.from_redis( t ) }
 
-    # Sort them descending via finish_time
-    task_messages.sort {|x, y| y.finish_time <=> x.finish_time }
+    # Sort them ascending via finish_time
+    task_messages.sort {|x, y| x.finish_time <=> y.finish_time }
 
   end
 
@@ -61,7 +72,7 @@ class TaskQueue
 
     # Redis key
     def key
-      "queue"
+      "task_queue"
     end
 
 end
