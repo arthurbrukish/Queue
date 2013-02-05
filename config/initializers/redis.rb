@@ -1,2 +1,3 @@
 # Initializing connection to Redis
-RedisConnection = Redis.new( :host => AppConfig['redist']['host'], :port => AppConfig['redist']['port'] )
+uri = URI.parse( AppConfig['redist_url'] )
+RedisConnection = Redis.new( :host => uri.host, :port => uri.port, :password => uri.password )

@@ -1,10 +1,8 @@
 development:
-  redist:
-    host: 'localhost'
-    port: 6379
+  redist_url: localhost:6379
 
 test:
-  redist:
-    host: 'localhost'
-    port: 6379
+  redist_url: localhost:6379
 
+production:
+  redist_url: redis://redistogo:23caf1d8a2b6053676d24a2c8ee9c315@barreleye.redistogo.com:9264/
