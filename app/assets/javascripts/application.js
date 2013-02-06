@@ -18,7 +18,7 @@
 $(function(){
 
     $('.timepicker').datetimepicker({
-        dateFormat: 'dd/mm/yyyy'
+        dateFormat: 'dd/mm/yy'
     });
 
 });
