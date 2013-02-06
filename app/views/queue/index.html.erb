@@ -12,7 +12,7 @@
     </tr>
     <% @tasks.each do |t| %>
         <tr <%=raw 'class="expired"' if t.finish_time < Time.now %>>
-            <td><%= t.finish_time.strftime("%d/%m/%y %k:%M") %></td>
+            <td><%= t.finish_time.strftime("%d/%m/%Y %H:%M") %></td>
             <td><%= t.description %></td>
         </tr>
     <% end %>
