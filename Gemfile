@@ -9,6 +9,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'redis', '~> 3.0.1'
 
 group :test do

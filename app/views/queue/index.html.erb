@@ -12,7 +12,7 @@
     </tr>
     <% @tasks.each do |t| %>
         <tr <%=raw 'class="expired"' if t.finish_time < Time.now %>>
-            <td><%= t.finish_time %></td>
+            <td><%= t.finish_time.strftime("%d/%m/%y %k:%M") %></td>
             <td><%= t.description %></td>
         </tr>
     <% end %>
@@ -21,7 +21,7 @@
 <h2>Push Task</h2>
 <%= form_for :task, :url => queue_index_path do |f| %>
     <%= f.label :finish_time %>
-    <%= f.text_field :finish_time %>
+    <%= f.text_field :finish_time, :class => 'timepicker' %>
 
     <%= f.label :description %>
     <%= f.text_field :description %>
@@ -32,7 +32,7 @@
 <h2>Get Task</h2>
 <%= form_for :task, :url => get_task_queue_index_path do |f| %>
     <%= f.label :finish_time %>
-    <%= f.text_field :finish_time %>
+    <%= f.text_field :finish_time, :id => 'get_finish_time', :class => 'timepicker' %>
 
     <%= f.submit 'Get' %>
 <% end %>
